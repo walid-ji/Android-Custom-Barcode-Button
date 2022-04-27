@@ -1,4 +1,4 @@
-package com.example.customBarcodeScanner.barcodeScanner;
+package com.example.customBarcodeScanner.barcodeScanner.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.customBarcodeScanner.R;
+import com.example.customBarcodeScanner.barcodeScanner.captureActivity.ScanCapture;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 public class ScanButton extends LinearLayout {
@@ -53,8 +54,8 @@ public class ScanButton extends LinearLayout {
             fragment = scan.getFragment();
         }
         IntentIntegrator result = IntentIntegrator.forSupportFragment(fragment);
-        result.addExtra("cons",scan.isContinuous());
-        result.setPrompt("Scan this")
+        result.addExtra("cons", scan.isScanContinuous());
+        result.setPrompt("Start scanning")
                 .setOrientationLocked(true)
                 .setBeepEnabled(false)
                 .setBarcodeImageEnabled(false)
@@ -67,9 +68,10 @@ public class ScanButton extends LinearLayout {
     }
 
     public interface Scan {
+
         Fragment getFragment();
 
-        boolean isContinuous();
+        boolean isScanContinuous();
     }
 
 }

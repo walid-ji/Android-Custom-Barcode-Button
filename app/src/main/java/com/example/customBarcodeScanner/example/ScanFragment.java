@@ -1,4 +1,4 @@
-package com.example.customBarcodeScanner;
+package com.example.customBarcodeScanner.example;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.customBarcodeScanner.barcodeScanner.ScanButton;
+import com.example.customBarcodeScanner.barcodeScanner.customView.ScanButton;
 import com.example.customBarcodeScanner.databinding.FragmentScanBinding;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class ScanFragment extends Fragment implements ScanButton.Scan {
 
     private FragmentScanBinding binding;
+    private final Logger LOGGER = LoggerFactory.getLogger(ScanFragment.class);
 
     @Nullable
     @Override
@@ -37,8 +41,7 @@ public class ScanFragment extends Fragment implements ScanButton.Scan {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        String qrCode = result.getContents();
-        System.out.println("qrcode : " + qrCode);
+        LOGGER.info("the scanned qrcode is  : {}", result.getContents());
     }
 
     @Override
@@ -47,7 +50,7 @@ public class ScanFragment extends Fragment implements ScanButton.Scan {
     }
 
     @Override
-    public boolean isContinuous() {
+    public boolean isScanContinuous() {
         return false;
     }
 }

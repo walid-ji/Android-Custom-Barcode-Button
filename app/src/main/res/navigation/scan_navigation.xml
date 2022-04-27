@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/scanFragment2"
-        android:name="com.example.customBarcodeScanner.ScanFragment"
+        android:name="com.example.customBarcodeScanner.example.ScanFragment"
         android:label="fragment_scan"
         tools:layout="@layout/fragment_scan" />
 </navigation>

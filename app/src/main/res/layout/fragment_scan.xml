@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ScanFragment">
+    tools:context=".example.ScanFragment">
 
 
-    <com.example.customBarcodeScanner.barcodeScanner.ScanButton
+    <com.example.customBarcodeScanner.barcodeScanner.customView.ScanButton
         android:id="@+id/scan_button_custom"
         android:layout_width="match_parent"
         android:gravity="center_vertical"

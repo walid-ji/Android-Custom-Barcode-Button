@@ -1,4 +1,4 @@
-package com.example.customBarcodeScanner.barcodeScanner;
+package com.example.customBarcodeScanner.barcodeScanner.captureActivity;
 
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -57,7 +57,6 @@ public class ScanCapture extends CaptureActivity {
             }
         });
         boolean isContinuous = getIntent().getBooleanExtra("cons", false);
-        System.out.println(" isContinuous : " + isContinuous                                                                                                                           );
 
         if (isContinuous) {
             DecodeContinuous();
