@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.customBarcodeScanner.R;
+import com.example.customBarcodeScanner.barcodeScanner.shared.ScanConstants;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -15,12 +16,17 @@ import com.journeyapps.barcodescanner.CaptureActivity;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 public class ScanCapture extends CaptureActivity {
 
     private static final int DELAY = 3000;
-    private final BarcodeCallback callback = new BarcodeCallback() {
+    private final Logger LOGGER = LoggerFactory.getLogger(ScanCapture.class);
+
+    private final BarcodeCallback continuousScanCallback = new BarcodeCallback() {
         private long lastTimestamp = 0;
 
         @Override
@@ -30,7 +36,7 @@ public class ScanCapture extends CaptureActivity {
                     // Too soon after the last barcode - ignore.
                     return;
                 }
-                System.out.println(" item : " + result.getText());
+                LOGGER.info("the scanned qrcode is  : {}", result.getText());
                 beepSound();
                 lastTimestamp = System.currentTimeMillis();
             }
@@ -40,14 +46,14 @@ public class ScanCapture extends CaptureActivity {
         public void possibleResultPoints(List<ResultPoint> resultPoints) {
         }
     };
-    private CaptureManager capture;
+
     private DecoratedBarcodeView barcodeScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         barcodeScannerView = initializeContent();
-        capture = new CaptureManager(this, barcodeScannerView);
+        CaptureManager capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         Button cancel = findViewById(R.id.cancel_action);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +62,8 @@ public class ScanCapture extends CaptureActivity {
                 onBackPressed();
             }
         });
-        boolean isContinuous = getIntent().getBooleanExtra("cons", false);
 
+        boolean isContinuous = getIntent().getBooleanExtra(ScanConstants.IS_SCAN_CONTINUOUS, false);
         if (isContinuous) {
             DecodeContinuous();
         } else {
@@ -66,13 +72,14 @@ public class ScanCapture extends CaptureActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
 
-    protected void beepSound() {
+    public void beepSound() {
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -83,25 +90,23 @@ public class ScanCapture extends CaptureActivity {
     }
 
     public void DecodeContinuous() {
-        barcodeScannerView.decodeContinuous(callback);
+        barcodeScannerView.decodeContinuous(continuousScanCallback);
     }
 
-
     @Override
-    protected DecoratedBarcodeView initializeContent() {
+    public DecoratedBarcodeView initializeContent() {
         setContentView(R.layout.scan_capture_layout);
         return (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         barcodeScannerView.resume();
     }
 
-
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         barcodeScannerView.pause();
     }
