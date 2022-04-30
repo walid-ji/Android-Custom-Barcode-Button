@@ -2,7 +2,6 @@ package com.example.customBarcodeScanner.barcodeScanner.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -40,21 +39,20 @@ public class ScanButton extends LinearLayout {
 
     public void init() {
         inflate(getContext(), R.layout.scan_button, this);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
         Button scan = findViewById(R.id.scan_button);
-        scan.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onScanClick();
-            }
-        });
+        scan.setOnClickListener(v -> onScanClick());
     }
 
     private void onScanClick() {
-        Fragment fragment = null;
-        if (scan != null) {
-            fragment = scan.getFragment();
+        if (scan == null) {
+            throw new UnsupportedOperationException("Please implement Scan interface");
         }
-        IntentIntegrator result = IntentIntegrator.forSupportFragment(fragment);
+        IntentIntegrator result = IntentIntegrator.forSupportFragment(scan.getFragment());
         result.addExtra(ScanConstants.IS_SCAN_CONTINUOUS, scan.isScanContinuous());
         result.setPrompt("Start scanning")
                 .setOrientationLocked(true)
