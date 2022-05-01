@@ -18,11 +18,7 @@ was implemented to avoid duplicationg code whenerver we need to implement a scan
 ## Implementation 
 to use this custom view , first you need to import custom view to your layout :
 
-      <com.example.customBarcodeScanner.barcodeScanner.customView.ScanButton
-        android:id="@+id/scan_button_custom"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content" />
+      <com.example.customBarcodeScanner.barcodeScanner.customView.ScanButton />
         
 then implement the scan interface within your hosting fragment :
 
