@@ -1,4 +1,4 @@
-# Custom-Barcode-Button
+# Android-Custom-Barcode-Button
 ## Benefits
 <ul>
   <li>Can scan both barcodes and QR codes</li>
