@@ -41,8 +41,8 @@ public class ScanFragment extends Fragment implements ScanButton.Scan {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        LOGGER.info("the scanned qrcode is  : {}", result.getContents());
-    }
+        binding.textScanned.setText("the code scanned :"+ result.getContents());
+        LOGGER.info("the scanned qrcode is  : {}", result.getContents());    }
 
     @Override
     public Fragment getFragment() {

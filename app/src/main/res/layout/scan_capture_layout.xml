@@ -4,21 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="#A9F0D1"
     android:orientation="vertical">
 
 
-        <com.journeyapps.barcodescanner.DecoratedBarcodeView
-            android:id="@+id/zxing_barcode_scanner"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            app:zxing_preview_scaling_strategy="centerCrop"
-            app:zxing_use_texture_view="true" />
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/zxing_barcode_scanner"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        app:zxing_preview_scaling_strategy="centerCrop"
+        app:zxing_use_texture_view="true" />
 
 
     <Button
         android:id="@+id/cancel_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#268"
+        android:textColor="#fff"
+        android:layout_marginTop="15dp"
         android:text="Close"/>
 
 </LinearLayout>
